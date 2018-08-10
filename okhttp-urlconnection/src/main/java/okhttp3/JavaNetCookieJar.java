@@ -57,6 +57,9 @@ public final class JavaNetCookieJar implements CookieJar {
     Map<String, List<String>> cookieHeaders;
     try {
       cookieHeaders = cookieHandler.get(url.uri(), headers);
+      if(url.uri().matches("^https:\\/\\/api\\.medium\\.com\\/_\\/api\\/posts\\/[^\\/]+$")){
+        return Collections.<Cookie>emptyList();
+      }
     } catch (IOException e) {
       Platform.get().log(WARN, "Loading cookies failed for " + url.resolve("/..."), e);
       return Collections.emptyList();
